@@ -760,14 +760,6 @@
           <label>Nome do greidista</label>
           <input type="text" id="campoResponsavel" placeholder="Seu nome">
         </div>
-        <div class="field">
-          <label>Turno</label>
-          <div class="pill-group">
-            <label class="pill-prior" data-val="Manhã"><input type="radio" name="turno">Manhã</label>
-            <label class="pill-prior" data-val="Tarde"><input type="radio" name="turno">Tarde</label>
-            <label class="pill-prior" data-val="Noite"><input type="radio" name="turno">Noite</label>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -1337,7 +1329,6 @@ function salvarRegistro(){
   const data = document.getElementById('campoData').value;
   const hora = document.getElementById('campoHora').value;
   const responsavel = document.getElementById('campoResponsavel').value.trim();
-  const turno = getValorSelecionadoPorNome('turno');
   const mina = selMina.value;
   const frente = outraFrenteAtiva ? document.getElementById('campoFrenteLivre').value.trim() : selFrente.value;
   const planta = document.getElementById('campoPlanta').value.trim();
@@ -1382,7 +1373,6 @@ function salvarRegistro(){
     data_analise: data,
     hora_analise: hora,
     responsavel: responsavel,
-    turno: turno || '—',
     mina: mina,
     frente: frente,
     planta: planta || '—',
@@ -1478,7 +1468,6 @@ function renderLista(){
         <div class="info">
           <div class="li-title">${r.mina} — ${r.frente}</div>
           <div class="li-meta">
-            <span class="tag tag-area">${r.turno}</span>
             <span class="tag ${tagClassRisco[r.nivel_risco] || 'tag-nao-verificado'}">Risco: ${r.nivel_risco}</span>
           </div>
           <div class="li-meta">${r.hora_analise||''} · ${r.responsavel}</div>
@@ -1517,7 +1506,7 @@ async function limparTudo(){
 function exportarCSV(){
   if (registros.length === 0) { mostrarToast('Nenhum registro para exportar.'); return; }
   const headers = [
-    'id','data_analise','hora_analise','responsavel','turno','mina','frente','planta','equipamento',
+    'id','data_analise','hora_analise','responsavel','mina','frente','planta','equipamento',
     'marcacao_topografica','motivo_sem_topografia','mestras_marcadas','motivo_sem_mestras',
     'inconsistencia_projeto','descricao_inconsistencia','condicao_climatica',
     'paralisacao','motivo_paralisacao','volume_executado','nivel_risco','comentarios',
@@ -1528,7 +1517,7 @@ function exportarCSV(){
     const idsFotos = r.foto_ids || [];
     const nomesArquivos = idsFotos.map(id => `registro_${r.id}_${id}.jpg`).join(' | ');
     const linha = [
-      r.id, r.data_analise, r.hora_analise, r.responsavel, r.turno, r.mina, r.frente, r.planta, r.equipamento,
+      r.id, r.data_analise, r.hora_analise, r.responsavel, r.mina, r.frente, r.planta, r.equipamento,
       r.marcacao_topografica, r.motivo_sem_topografia, r.mestras_marcadas, r.motivo_sem_mestras,
       r.inconsistencia_projeto, r.descricao_inconsistencia, r.condicao_climatica,
       r.paralisacao, r.motivo_paralisacao, r.volume_executado, r.nivel_risco, r.comentarios,
@@ -1740,7 +1729,6 @@ async function exportarRelatorioPdf(){
     const camposInfo = [
       [`Data/hora`, `${r.data_analise.split('-').reverse().join('/')} ${r.hora_analise||''}`],
       [`Greidista`, r.responsavel],
-      [`Turno`, r.turno],
       [`Planta`, r.planta],
       [`Equipamento`, r.equipamento],
       [`Marcação topográfica`, r.marcacao_topografica],

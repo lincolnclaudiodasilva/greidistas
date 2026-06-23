@@ -5,7 +5,7 @@ App instalável no Android e iOS para o relatório diário de atividades dos gre
 ## O que este app faz
 
 Cada relatório registra:
-- Data, hora, nome do greidista e turno
+- Data, hora e nome do greidista
 - Mina, Frente e Planta (com possibilidade de digitar uma frente que não esteja na lista)
 - Equipamento em operação
 - Se havia marcação topográfica (e motivo, se não havia)
